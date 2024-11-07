@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { ThemeContext } from "./App";
 
 const Root = () => {
+  const { theme, setTheme } = useContext(ThemeContext);
   return (
     <div>
       <header>
@@ -12,7 +14,8 @@ const Root = () => {
           <NavLink to="/oef3">Oef3</NavLink>
         </nav>
       </header>
-      <main>
+      <main style={{backgroundColor: theme === "dark" ? "white" : "black",}}>
+      <button onClick={() => { setTheme(theme === "dark" ? "light" : "dark")}} style={{backgroundColor: theme === "dark" ? "black" : "white", color: theme === "dark" ? "white" : "black"}}>{theme}</button>
         <Outlet />
       </main>
     </div>
