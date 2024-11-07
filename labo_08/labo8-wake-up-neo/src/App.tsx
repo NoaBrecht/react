@@ -1,33 +1,21 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+interface LineProps {
+  text: string
+}
+const FourthLine = ({ text }: LineProps) => <><p>{text}</p></>;
+const ThirdLine = ({ text }: LineProps) => <><p>Follow the white rabbit.</p><FourthLine text={text} /></>;
+const SecondLine = ({ text }: LineProps) => <><p>The matrix has you...</p><ThirdLine text={text} /></>;
+const FirstLine = ({ text }: LineProps) => <><p>Wake Up, Neo...</p><SecondLine text={text} /></>
 
+const App = () => {
+  const [text, setText] = useState("Knock, Knock, Neo");
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+      <div style={{ backgroundColor: "black", color: "#4AF626", display: "flex", flexDirection: "column", padding: 20 }}>
+        <FirstLine text={text} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
