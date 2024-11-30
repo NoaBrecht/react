@@ -1,50 +1,22 @@
-import { Tabs } from 'expo-router';
-import { AntDesign } from '@expo/vector-icons';
+import { Stack } from "expo-router"
 import "../global.css";
 
+const BrandLayout = () => {
+    return (
+        <Stack
+            screenOptions={{
+                headerShown:false,
 
-const HomeLayout = () => {
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: '#6200ee',
-        tabBarInactiveTintColor: '#828282',
-        tabBarStyle: {
-          backgroundColor: '#ffffff',
-          borderTopWidth: 0,
-
-          elevation: 5,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          height: 60,
-          paddingBottom: 5,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="brands/[id]"
-        options={{
-          title: 'Modelen voor dit merk',
-          href: null
-        }}
-      />
-    </Tabs>
-  );
+                headerTintColor: '#6200ee',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }}
+        >
+            <Stack.Screen
+                name="brands/[id]"
+            />
+        </Stack>
+    )
 }
-
-export default HomeLayout;
+export default BrandLayout;

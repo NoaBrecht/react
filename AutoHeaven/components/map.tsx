@@ -23,13 +23,15 @@ const Map = ({ brands }: { brands: Brand[] }) => {
                 <Marker
                     key={brand.id}
                     coordinate={{ latitude: brand.city.latitude, longitude: brand.city.longitude }}
-                    title={brand.name}
+                    title={`${brand.name} (${brand.city.name})`}
                     description={`Founded: ${brand.founded} in ${brand.country}`}
-                    pinColor="blue" >
+                    pinColor="blue"
+                >
                     <Image
                         source={{ uri: brand.logo }}
                         resizeMode="contain"
-                        style={{ width: 40, height: 20, display: "flex" }} />
+                        style={{ width: 40, height: 20 }}
+                    />
                 </Marker>
             ))}
         </MapView>
