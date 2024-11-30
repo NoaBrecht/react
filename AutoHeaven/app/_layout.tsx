@@ -15,6 +15,10 @@ const BrandLayout = () => {
         >
             <Stack.Screen
                 name="brands/[id]"
+                options={{
+                    // Hide the header for all other routes.
+                    headerShown: true,
+                  }}
             />
         </Stack>
     )

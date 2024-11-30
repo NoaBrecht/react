@@ -1,11 +1,12 @@
 import { Tabs } from 'expo-router';
-import { AntDesign, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 
 const HomeLayout = () => {
   return (
     <Tabs
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: '#6200ee',
         tabBarInactiveTintColor: '#828282',
         headerTintColor: '#6200ee',
@@ -42,7 +43,7 @@ const HomeLayout = () => {
         name="newModel"
         options={{
           title: 'Add a new model',
-          href: null
+          href: null,
         }}
       />
       <Tabs.Screen
@@ -50,7 +51,8 @@ const HomeLayout = () => {
         options={{
           title: 'Models',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="car" size={size} color={color} />),
+            <AntDesign name="car" size={size} color={color} />),
+            
         }}
       />
       <Tabs.Screen
@@ -58,7 +60,7 @@ const HomeLayout = () => {
         options={{
           title: 'Map',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome6 name="map-location-dot" size={size} color={color} />),
+            <Ionicons name="map-outline" size={size} color={color} />),
         }}
       />
     </Tabs>
