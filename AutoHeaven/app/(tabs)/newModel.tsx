@@ -1,23 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Text, TextInput, ScrollView, View } from 'react-native';
-import { Brand, Model } from '@/types';
+import { Text, TextInput, ScrollView, View, Button } from 'react-native';
+import { Brand, FuelType, Model, Transmission } from '@/types';
 import { Picker } from '@react-native-picker/picker';
 
 const NewModel = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [models, setModels] = useState<Model[]>([]);
   const [name, setName] = useState<string>('');
   const [selectedBrand, setSelectedBrand] = useState<any>();
   const [type, setType] = useState<string>('Sedan');
   const [year, setYear] = useState<string>('2000');
-  const [fuelType, setFuelType] = useState<string>('Petrol');
+  const [fuelType, setFuelType] = useState<FuelType>(FuelType.Petrol);
   const [topSpeed, setTopSpeed] = useState<string>('0');
   const [acceleration, setAcceleration] = useState<string>('0');
   const [horsepower, setHorsepower] = useState<string>('0');
-  const [transmission, setTransmission] = useState<string>('Manual');
+  const [transmission, setTransmission] = useState<Transmission>(Transmission.Manual);
   const [seatingCapacity, setSeatingCapacity] = useState<string>('0');
-
   const getBrands = async () => {
     setLoading(true);
     const headers = {
@@ -92,9 +90,11 @@ const NewModel = () => {
           onValueChange={(itemValue) => setFuelType(itemValue)}
           className="bg-gray-100 p-3 rounded-md"
         >
-          {['Petrol', 'Diesel', 'Electric', 'Hybrid', 'Other'].map((fuel) => (
-            <Picker.Item label={fuel} value={fuel} key={fuel} />
-          ))}
+          <Picker.Item label="Electric" value={FuelType.Electric} />
+          <Picker.Item label="Hybrid" value={FuelType.Hybrid} />
+          <Picker.Item label="Petrol" value={FuelType.Petrol} />
+          <Picker.Item label="Diesel" value={FuelType.Diesel} />
+          <Picker.Item label="Other" value={FuelType.Other} />
         </Picker>
       </View>
 
@@ -138,22 +138,38 @@ const NewModel = () => {
           onValueChange={(itemValue) => setTransmission(itemValue)}
           className="bg-gray-100 p-3 rounded-md"
         >
-          {['Manual', 'Automatic'].map((trans) => (
-            <Picker.Item label={trans} value={trans} key={trans} />
-          ))}
+          <Picker.Item label="Automatic" value={Transmission.Automatic} />
+          <Picker.Item label="Manual" value={Transmission.Manual} />
         </Picker>
       </View>
 
-    <View className="mb-4">
-      <Text className="text-xl font-semibold text-gray-800 mb-2">Seating Capacity</Text>
-      <TextInput
-        value={seatingCapacity}
-        onChangeText={(text) => setSeatingCapacity(text.startsWith('0') ? text.slice(1) : text)}
-        keyboardType="numeric"
-        className="border border-gray-300 rounded-lg p-3 text-lg"
-        placeholder="Enter seating capacity"
-      />
-    </View>
+      <View className="mb-4">
+        <Text className="text-xl font-semibold text-gray-800 mb-2">Seating Capacity</Text>
+        <TextInput
+          value={seatingCapacity}
+          onChangeText={(text) => setSeatingCapacity(text.startsWith('0') ? text.slice(1) : text)}
+          keyboardType="numeric"
+          className="border border-gray-300 rounded-lg p-3 text-lg"
+          placeholder="Enter seating capacity"
+        />
+      </View>
+      <Button title="Add Model" onPress={() => {
+        const model: Model = {
+          id: 0,
+          name: name,
+          brand_id: selectedBrand,
+          type: type,
+          year: parseInt(year),
+          fuel_type: fuelType,
+          top_speed_kmh: parseInt(topSpeed),
+          acceleration_0_to_100_kmh: parseInt(acceleration),
+          horsepower: parseInt(horsepower),
+          transmission: transmission,
+          seating_capacity: parseInt(seatingCapacity),
+        };
+        console.log(model);
+      }
+      } />
     </ScrollView>
   );
 };

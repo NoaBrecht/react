@@ -32,6 +32,8 @@ export enum FuelType {
     Electric = "Electric",
     Hybrid = "Hybrid",
     Petrol = "Petrol",
+    Diesel = "Diesel",
+    Other = "Other",
 }
 
 export enum Transmission {
