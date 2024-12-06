@@ -44,6 +44,45 @@ const NewModel = () => {
 
   const pushModel = async () => {
     try {
+      if (
+        !name ||
+        !selectedBrand ||
+        !year ||
+        !topSpeed ||
+        !acceleration ||
+        !horsepower ||
+        !seatingCapacity
+      ) {
+        alert("All fields are required!");
+        return;
+      }
+      if (
+        isNaN(parseInt(topSpeed)) ||
+        isNaN(parseInt(acceleration)) ||
+        isNaN(parseInt(horsepower)) ||
+        isNaN(parseInt(seatingCapacity))
+      ) {
+        alert(
+          "Top Speed, Acceleration, Horsepower, and Seating Capacity must be numbers."
+        );
+        return;
+      }
+      if (
+        parseInt(topSpeed) < 0 ||
+        parseInt(acceleration) < 0 ||
+        parseInt(horsepower) < 0 ||
+        parseInt(seatingCapacity) < 0
+      ) {
+        alert(
+          "Top Speed, Acceleration, Horsepower, and Seating Capacity must be positive numbers."
+        );
+        return;
+      }
+      const currentYear = new Date().getFullYear() + 1;
+      if (parseInt(year) < 1885 || parseInt(year) > currentYear) {
+        alert("Please enter a valid year between 1885 and the upcoming year.");
+        return;
+      }
       const response = await fetch(
         "https://sampleapis.assimilate.be/car/models",
         {
@@ -76,15 +115,7 @@ const NewModel = () => {
       alert("Model added successfully!");
     } catch (error) {
       console.error(error);
-      // Stuur een notificatie bij fout
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Error!",
-          body: "Something went wrong, please try again.",
-        },
-        trigger: null,
-      });
-      alert("Something went wrong");
+      alert("Something went wrong, please try again later.");
     }
   };
 
@@ -108,7 +139,7 @@ const NewModel = () => {
   }, []);
 
   return (
-    <ScrollView className="px-6 py-4 bg-white">
+    <ScrollView className="px-6 flex bg-white">
       <View className="mb-4">
         <Text className="text-xl font-semibold text-gray-800 mb-2">Brand</Text>
         <Picker

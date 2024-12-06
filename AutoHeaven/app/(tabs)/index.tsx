@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, Image, Linking } from "react-native";
-import { Link, Tabs } from "expo-router";
+import { FlatList, Text, View, Image, Linking, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 import { Brand } from "@/types";
 
 const Index = () => {
@@ -29,47 +29,94 @@ const Index = () => {
     <FlatList
       data={brands}
       renderItem={({ item }) => (
-        <View className="items-center p-4 bg-white rounded-2xl shadow-sm mb-6">
+        <View style={styles.card}>
           <Link
             href={{
               pathname: "/brands/[id]",
               params: { id: item.id },
             }}
+            style={{ width: "100%" }}
           >
-            {/* Afbeelding teruggezet naar exact 100x100px zoals in je oorspronkelijke code */}
-            <Image
-              source={{ uri: item.logo }}
-              style={{
-                width: 100,
-                height: 100,
-                resizeMode: "contain",
-                marginBottom: 10,
-              }}
-            />
+            <View style={styles.cardContent}>
+              <Image
+                source={{ uri: item.logo }}
+                style={styles.logo}
+              />
+              <Text style={styles.brandName}>{item.name}</Text>
+              <Text style={styles.country}>{item.country}</Text>
+              <Text style={styles.founded}>Founded: {item.founded}</Text>
+              <Text style={styles.city}>City: {item.city.name}</Text>
+              <Text
+                style={styles.website}
+                onPress={() => Linking.openURL(item.website)}
+              >
+                {item.website.replace(/^https?:\/\/(www\.)?/, "")}
+              </Text>
+            </View>
           </Link>
-          <Text className="text-2xl font-semibold text-gray-900 mb-2">
-            {item.name}
-          </Text>
-          <Text className="text-lg text-gray-700 mb-2">{item.country}</Text>
-          <Text className="text-sm text-gray-600 mb-2">
-            Founded: {item.founded}
-          </Text>
-          <Text className="text-sm text-gray-600 mb-3">
-            City: {item.city.name}
-          </Text>
-          <Text
-            className="text-blue-500 underline"
-            onPress={() => Linking.openURL(item.website)}
-          >
-            {item.website.replace(/^https?:\/\/(www\.)?/, "")}
-          </Text>
         </View>
       )}
       keyExtractor={(item) => item.id.toString()}
       onRefresh={() => getBrands()}
       refreshing={loading}
+      contentContainerStyle={styles.flatListContent}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  flatListContent: {
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  card: {
+    backgroundColor: "white",
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 10,
+    padding: 16,
+    marginBottom: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardContent: {
+    alignItems: "center",
+    textAlign: "center",
+    width: "100%", // Ensure it takes the full width
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    resizeMode: "contain",
+    marginBottom: 12,
+    borderRadius: 12,
+  },
+  brandName: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333",
+  },
+  country: {
+    fontSize: 14,
+    color: "#666",
+  },
+  founded: {
+    fontSize: 12,
+    color: "#777",
+  },
+  city: {
+    fontSize: 12,
+    color: "#777",
+  },
+  website: {
+    fontSize: 12,
+    color: "#1E90FF",
+    marginTop: 8,
+    textDecorationLine: "underline",
+  },
+});
 
 export default Index;

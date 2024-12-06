@@ -11,7 +11,6 @@ import {
 const Map = ({ brands }: { brands: Brand[] }) => {
   const [location, setLocation] = useState<LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
   useEffect(() => {
     (async () => {
       let { status } = await requestForegroundPermissionsAsync();
@@ -19,18 +18,13 @@ const Map = ({ brands }: { brands: Brand[] }) => {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await getCurrentPositionAsync({});
       setLocation(location);
     })();
   }, []);
-
-  // Als de locatie nog niet is geladen, render dan een laadscherm of laat de kaart niet renderen
   if (!location) {
-    return null; // Je kunt hier ook een laadscherm of een boodschap tonen
+    return null;
   }
-
-  // Fallback regio als er geen merken zijn
   const fallbackRegion =
     brands.length > 0
       ? {
@@ -45,8 +39,6 @@ const Map = ({ brands }: { brands: Brand[] }) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         };
-
-  // Regio voor de kaart als de locatie beschikbaar is
   const region = location
     ? {
         latitude: location.coords.latitude,
@@ -55,13 +47,12 @@ const Map = ({ brands }: { brands: Brand[] }) => {
         longitudeDelta: 0.0421,
       }
     : fallbackRegion;
-
   return (
     <MapView
       style={{ flex: 1 }}
       initialRegion={region}
-      showsUserLocation={true} // Laat de gebruikerslocatie zien
-      followsUserLocation={true} // Volgt de locatie van de gebruiker
+      showsUserLocation={true}
+      followsUserLocation={true}
     >
       {brands.map((brand) => (
         <Marker
@@ -72,7 +63,6 @@ const Map = ({ brands }: { brands: Brand[] }) => {
           }}
           title={`${brand.name} (${brand.city.name})`}
           description={`Founded: ${brand.founded} in ${brand.country}`}
-          pinColor="blue"
         >
           <Image
             source={{ uri: brand.logo }}

@@ -23,7 +23,6 @@ const Index = () => {
     setModels(data);
     setLoading(false);
   };
-
   useEffect(() => {
     const getFavorite = async () => {
       const favoriteModel = await AsyncStorage.getItem("favoriteModel");
@@ -43,7 +42,6 @@ const Index = () => {
     };
     storeData();
   }, [favorite]);
-
   return (
     <>
       <View className="flex items-center justify-center my-2">
@@ -53,19 +51,20 @@ const Index = () => {
           </View>
         </Link>
       </View>
-
       <FlatList
         data={models}
         renderItem={({ item }) => (
-          <View className="bg-white p-4 mb-4 rounded-lg shadow-md">
-            <AntDesign
-              onPress={() => setFavorite(item.id)}
-              name={favorite === item.id ? "heart" : "hearto"}
-              size={24}
-              color={favorite === item.id ? "red" : "grey"}
-              style={{ position: "absolute", top: 10, right: 10 }}
-            />
-            <Text className="text-lg font-bold mb-2">{item.name}</Text>
+          <View className="flex bg-white p-4 mb-4 rounded-lg shadow-md">
+            <View className="flex flex-row items-center justify-between w-full">
+              <Text className="text-lg font-bold mb-2 flex-1">{item.name}</Text>
+              <AntDesign
+                className=" p-2"
+                onPress={() => setFavorite(item.id)}
+                name={favorite === item.id ? "heart" : "hearto"}
+                size={24}
+                color={favorite === item.id ? "red" : "grey"}
+              />
+            </View>
             <Text className="text-gray-700 mb-1">Year: {item.year}</Text>
             <Text className="text-gray-700 mb-1">Type: {item.type}</Text>
             <Text className="text-gray-700 mb-1">
@@ -91,6 +90,11 @@ const Index = () => {
         keyExtractor={(item) => item.id.toString()}
         onRefresh={() => getBrands()}
         refreshing={loading}
+        contentContainerStyle={{
+          paddingHorizontal: 16,
+          paddingTop: 20,
+          paddingBottom: 20,
+        }}
       />
     </>
   );
