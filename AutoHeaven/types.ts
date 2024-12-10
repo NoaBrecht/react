@@ -29,14 +29,22 @@ export interface Model {
 }
 
 export enum FuelType {
-  Electric = "Electric",
-  Hybrid = "Hybrid",
-  Petrol = "Petrol",
-  Diesel = "Diesel",
-  Other = "Other",
+    Electric = "Electric",
+    Hybrid = "Hybrid",
+    Petrol = "Petrol",
+    Diesel = "Diesel",
+    Hydrogen = "Hydrogen",
+    CNG = "CNG",
+    LPG = "LPG",
+    Other = "Other",
 }
 
 export enum Transmission {
-  Automatic = "Automatic",
-  Manual = "Manual",
+    Automatic = "Automatic",
+    Manual = "Manual",
+    CVT = "CVT",
+    DCT="DCT",
+    Sequential="Sequential",
+    SemiAutomatic = "SemiAutomatic",
+    ElectricDrive ="ElectricDrive"
 }
