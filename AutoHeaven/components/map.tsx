@@ -1,4 +1,4 @@
-import { Brand } from "@/types";
+import { Brand } from "@/types/types";
 import { useEffect, useState } from "react";
 import { Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";

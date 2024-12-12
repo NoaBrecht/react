@@ -29,10 +29,10 @@ export interface Model {
 }
 
 export enum FuelType {
-  Electric = "Electric",
-  Hybrid = "Hybrid",
-  Petrol = "Petrol",
   Diesel = "Diesel",
+  Petrol = "Petrol",
+  Hybrid = "Hybrid",
+  Electric = "Electric",
   Hydrogen = "Hydrogen",
   CNG = "CNG",
   LPG = "LPG",

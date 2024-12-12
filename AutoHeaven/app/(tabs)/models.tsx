@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, Image, Linking } from "react-native";
+import { FlatList, Text, View, StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import { AntDesign } from "@expo/vector-icons";
-import { Model } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Model } from "@/types/types";
+import ModelCard from "@/components/modelCard";
+import Background from "@/components/background";
 
 const Index = () => {
   const [models, setModels] = useState<Model[]>([]);
@@ -44,6 +45,7 @@ const Index = () => {
   }, [favorite]);
   return (
     <>
+      <Background />
       <View className="flex items-center justify-center my-2">
         <Link href="/newModel" replace>
           <View className="bg-blue-500 p-2 rounded-md">
@@ -54,38 +56,38 @@ const Index = () => {
       <FlatList
         data={models}
         renderItem={({ item }) => (
-          <View className="flex bg-white p-4 mb-4 rounded-lg shadow-md">
-            <View className="flex flex-row items-center justify-between w-full">
-              <Text className="text-lg font-bold mb-2 flex-1">{item.name}</Text>
-              <AntDesign
-                className=" p-2"
-                onPress={() => setFavorite(item.id)}
-                name={favorite === item.id ? "heart" : "hearto"}
-                size={24}
-                color={favorite === item.id ? "red" : "grey"}
-              />
-            </View>
-            <Text className="text-gray-700 mb-1">Year: {item.year}</Text>
-            <Text className="text-gray-700 mb-1">Type: {item.type}</Text>
-            <Text className="text-gray-700 mb-1">
-              Fuel Type: {item.fuel_type}
-            </Text>
-            <Text className="text-gray-700 mb-1">
-              Transmission: {item.transmission}
-            </Text>
-            <Text className="text-gray-700 mb-1">
-              Top Speed: {item.top_speed_kmh} km/h
-            </Text>
-            <Text className="text-gray-700 mb-1">
-              0-100 km/h: {item.acceleration_0_to_100_kmh} sec
-            </Text>
-            <Text className="text-gray-700 mb-1">
-              Horsepower: {item.horsepower} hp
-            </Text>
-            <Text className="text-gray-700 mb-1">
-              Seating Capacity: {item.seating_capacity}
-            </Text>
-          </View>
+          <ModelCard model={item} showFavorite={true} favorite={favorite} setFavorite={setFavorite} />
+          // <View className="flex bg-white p-4 mb-4 rounded-lg shadow-md">
+          //   <View className="flex flex-row items-center justify-between w-full">
+          //     <Text className="text-lg font-bold mb-2 flex-1">{item.name}</Text>
+          //     <AntDesign
+          //       className="p-2"
+          //       onPress={() => setFavorite(item.id)}
+          //       name={favorite === item.id ? "heart" : "hearto"}
+          //       size={24}
+          //       color={favorite === item.id ? "red" : "grey"} />
+          //   </View>
+          //   <Text className="text-gray-700 mb-1">Year: {item.year}</Text>
+          //   <Text className="text-gray-700 mb-1">Type: {item.type}</Text>
+          //   <Text className="text-gray-700 mb-1">
+          //     Fuel Type: {item.fuel_type}
+          //   </Text>
+          //   <Text className="text-gray-700 mb-1">
+          //     Transmission: {item.transmission}
+          //   </Text>
+          //   <Text className="text-gray-700 mb-1">
+          //     Top Speed: {item.top_speed_kmh} km/h
+          //   </Text>
+          //   <Text className="text-gray-700 mb-1">
+          //     0-100 km/h: {item.acceleration_0_to_100_kmh} sec
+          //   </Text>
+          //   <Text className="text-gray-700 mb-1">
+          //     Horsepower: {item.horsepower} hp
+          //   </Text>
+          //   <Text className="text-gray-700 mb-1">
+          //     Seating Capacity: {item.seating_capacity}
+          //   </Text>
+          // </View>
         )}
         keyExtractor={(item) => item.id.toString()}
         onRefresh={() => getBrands()}
@@ -99,5 +101,4 @@ const Index = () => {
     </>
   );
 };
-
 export default Index;

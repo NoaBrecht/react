@@ -1,10 +1,9 @@
-import { Model } from "@/types";
+import Background from "@/components/background";
+import ModelCard from "@/components/modelCard";
+import { Brand, Model } from "@/types/types";
 import { Tabs, useFocusEffect, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { FlatList, Text, View } from "react-native";
-interface Brand {
-  name: string;
-}
+import { FlatList, Text, View, StyleSheet } from "react-native";
 const Models = () => {
   const { id } = useLocalSearchParams();
   const [models, setModels] = useState<Model[]>([]);
@@ -49,39 +48,46 @@ const Models = () => {
           href: null,
         }}
       />
+      <Background />
       <FlatList
         data={models}
         renderItem={({ item }) => (
-          <View>
-            <View className="p-4 m-2 bg-white rounded-lg shadow-md">
-              <Text className="text-lg font-bold">{item.name}</Text>
-              <Text className="text-gray-600">Year: {item.year}</Text>
-              <Text className="text-gray-600">Type: {item.type}</Text>
-              <Text className="text-gray-600">Fuel type: {item.fuel_type}</Text>
-              <Text className="text-gray-600">
-                Transmission: {item.transmission}
-              </Text>
-              <Text className="text-gray-600">
-                Top speed: {item.top_speed_kmh} km/h
-              </Text>
-              <Text className="text-gray-600">
-                Acceleration (0 to 100 km/h): {item.acceleration_0_to_100_kmh}{" "}
-                sec
-              </Text>
-              <Text className="text-gray-600">
-                Horsepower: {item.horsepower} hp
-              </Text>
-              <Text className="text-gray-600">
-                Seating capacity: {item.seating_capacity}
-              </Text>
-            </View>
-          </View>
+          <ModelCard model={item} showFavorite={false} />
+          // <View>
+          //   <View className="p-4 m-2 bg-white rounded-lg shadow-md">
+          //     <Text className="text-lg font-bold">{item.name}</Text>
+          //     <Text className="text-gray-600">Year: {item.year}</Text>
+          //     <Text className="text-gray-600">Type: {item.type}</Text>
+          //     <Text className="text-gray-600">Fuel type: {item.fuel_type}</Text>
+          //     <Text className="text-gray-600">
+          //       Transmission: {item.transmission}
+          //     </Text>
+          //     <Text className="text-gray-600">
+          //       Top speed: {item.top_speed_kmh} km/h
+          //     </Text>
+          //     <Text className="text-gray-600">
+          //       Acceleration (0 to 100 km/h): {item.acceleration_0_to_100_kmh}{" "}
+          //       sec
+          //     </Text>
+          //     <Text className="text-gray-600">
+          //       Horsepower: {item.horsepower} hp
+          //     </Text>
+          //     <Text className="text-gray-600">
+          //       Seating capacity: {item.seating_capacity}
+          //     </Text>
+          //   </View>
+          // </View>
         )}
         keyExtractor={(item) => item.id.toString()}
         onRefresh={() => getModelsForBrand()}
         refreshing={loading}
+        contentContainerStyle={{
+          paddingHorizontal: 16,
+          paddingTop: 20,
+          paddingBottom: 20,
+        }}
       />
-    </View>
+    </View >
   );
 };
 export default Models;

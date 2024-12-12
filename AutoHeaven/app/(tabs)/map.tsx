@@ -1,7 +1,5 @@
 import Map from "@/components/map";
-import { Brand } from "@/types";
-import { FontAwesome6 } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { Brand } from "@/types/types";
 import { useState, useEffect } from "react";
 
 const mapPage = () => {

@@ -6,7 +6,6 @@ const BrandLayout = () => {
     <Stack
       screenOptions={{
         headerShown: false,
-
         headerTintColor: "#6200ee",
         headerTitleStyle: {
           fontWeight: "bold",
