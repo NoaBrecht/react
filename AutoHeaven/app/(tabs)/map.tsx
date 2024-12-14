@@ -1,5 +1,6 @@
 import Map from "@/components/map";
 import { Brand } from "@/types/types";
+import React from "react";
 import { useState, useEffect } from "react";
 
 const mapPage = () => {

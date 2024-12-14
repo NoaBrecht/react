@@ -4,6 +4,7 @@ import { Brand, FuelType, Model, Transmission } from "@/types/types";
 import { Picker } from "@react-native-picker/picker";
 import * as Notifications from "expo-notifications";
 import Background from "@/components/background";
+import React from "react";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
